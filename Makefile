@@ -2,7 +2,7 @@ BIN = mcp9600
 
 BUILD_DIR = build
 
-SOURCES = src/mcp9600-driver.c
+SOURCES = main.c src/mcp9600-driver.c
 
 INCLUDE_DIR = lib
 
