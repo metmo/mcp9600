@@ -11,12 +11,12 @@ static uint8_t i2c_init(char *name, int *fd, uint8_t i2c_addr) {
   *fd = open(name, O_RDWR);
 
   if (*fd < 0) {
-    perror("i2c open");
+    perror("i2c_init() open");
     return 1;
   }
 
   if (ioctl(*fd, I2C_SLAVE, i2c_addr) < 0) {
-    perror("ioctl");
+    perror("i2c_init() ioctl");
     return 1;
   }
   return 0;
@@ -24,7 +24,7 @@ static uint8_t i2c_init(char *name, int *fd, uint8_t i2c_addr) {
 
 static uint8_t i2c_deinit(int fd) {
   if (close(fd) < 0) {
-    perror("i2c close");
+    perror("i2c_deinit() close");
     return 1;
   }
   return 0;
