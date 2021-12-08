@@ -82,7 +82,7 @@ typedef struct mcp9600_handle {
   mcp9600_resolution_t resolution;
 } mcp9600_handle_t;
 
-uint8_t mcp9600_init(mcp9600_handle_t *handle, uint8_t i2c_addr,
+uint8_t mcp9600_init(mcp9600_handle_t *handle, char *device, uint8_t i2c_addr,
                      mcp9600_thermocouple_t tc_type,
                      mcp9600_resolution_t resolution);
 uint8_t mcp9600_deinit(mcp9600_handle_t *handle);
