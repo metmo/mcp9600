@@ -17,6 +17,13 @@ int main(int argc, char **argv) {
 
   printf("Temp: %x\n", temp);
 
+  int upper = temp & 0xff;
+  int lower = (temp >> 8) & 0xff;
+
+  float f_temp = upper * 16.0f + (lower / 16.0f);
+
+  printf("Temp: %f\n", f_temp);
+
   err = mcp9600_deinit(&handle);
 
   if (err != 0) {
