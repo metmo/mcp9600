@@ -42,7 +42,7 @@ extern "C" {
 #define MCP9600_STATUS_REG_BIT_ALERT2_STATUS (1 << 1)
 #define MCP9600_STATUS_REG_BIT_ALERT1_STATUS (1 << 0)
 
-#define MCP9600_STATUS_REG_BIT_ALERT1_4_STATUS (4<<0)
+#define MCP9600_STATUS_REG_BIT_ALERT1_4_STATUS (4 << 0)
 
 #define MCP9600_TCONF_REG_BIT_TCTYPE (3 << 3)
 #define MCP9600_TCONF_REG_BIT_FILTER (3 << 0)
@@ -78,16 +78,28 @@ typedef enum mcp9600_resolution {
 } mcp9600_resolution_t;
 
 typedef enum mcp9600_thermocouple_reg {
-    HOT = MCP9600_REG_TH,
-    DELTA = MCP9600_REG_TD,
-    COLD = MCP9600_REG_TC,
+  HOT = MCP9600_REG_TH,
+  DELTA = MCP9600_REG_TD,
+  COLD = MCP9600_REG_TC,
 } mcp9600_thermocouple_reg_t;
+
+typedef enum mcp9600_filter_coefficients {
+  FILTER_OFF = 0x00,
+  FILTER_1 = 0x01,
+  FILTER_2 = 0x02,
+  FILTER_3 = 0x03,
+  FILTER_4 = 0x04,
+  FILTER_5 = 0x05,
+  FILTER_6 = 0x06,
+  FILTER_7 = 0x07,
+} mcp9600_filter_coefficients_t;
 
 typedef struct mcp9600_handle {
   int fd;
   uint8_t i2c_addr;
   mcp9600_thermocouple_t tc_type;
   mcp9600_resolution_t resolution;
+  mcp9600_filter_coefficients_t filter;
 } mcp9600_handle_t;
 
 uint8_t mcp9600_init(mcp9600_handle_t *handle, char *device, uint8_t i2c_addr,
@@ -95,18 +107,27 @@ uint8_t mcp9600_init(mcp9600_handle_t *handle, char *device, uint8_t i2c_addr,
                      mcp9600_resolution_t resolution);
 uint8_t mcp9600_deinit(mcp9600_handle_t *handle);
 
-uint8_t mcp9600_read_temp(mcp9600_handle_t *handle, mcp9600_thermocouple_reg_t reg, float *data);
+uint8_t mcp9600_read_temp(mcp9600_handle_t *handle,
+                          mcp9600_thermocouple_reg_t reg, float *data);
 uint8_t mcp9600_read_hot(mcp9600_handle_t *handle, uint16_t *data);
 uint8_t mcp9600_read_cold(mcp9600_handle_t *handle, uint16_t *data);
 uint8_t mcp9600_read_delta(mcp9600_handle_t *handle, uint16_t *data);
 
-uint8_t mcp9600_get_status_burst_complete(mcp9600_handle_t *handle, uint8_t *data);
+uint8_t mcp9600_get_status_burst_complete(mcp9600_handle_t *handle,
+                                          uint8_t *data);
 uint8_t mcp9600_get_status_th_update(mcp9600_handle_t *handle, uint8_t *data);
 uint8_t mcp9600_get_status_sc(mcp9600_handle_t *handle, uint8_t *data);
 uint8_t mcp9600_get_status_input_range(mcp9600_handle_t *handle, uint8_t *data);
-uint8_t mcp9600_get_status_alert_status(mcp9600_handle_t *handle, uint8_t *data);
+uint8_t mcp9600_get_status_alert_status(mcp9600_handle_t *handle,
+                                        uint8_t *data);
 
-uint8_t mcp9600_set_thermocouple_type(mcp9600_handle_t *handle, mcp9600_thermocouple_t type);
+uint8_t mcp9600_set_thermocouple_type(mcp9600_handle_t *handle,
+                                      mcp9600_thermocouple_t type);
+uint8_t mcp9600_set_filter_coefficients(mcp9600_handle_t *handle,
+                                        mcp9600_filter_coefficients_t filter);
+
+uint8_t mcp9600_get_filter_coefficients(mcp9600_handle_t *handle,
+                                        mcp9600_filter_coefficients_t *filter);
 
 #ifdef __cplusplus
 }
