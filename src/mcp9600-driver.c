@@ -32,26 +32,46 @@ static uint8_t i2c_deinit(int fd) {
 
 static uint8_t i2c_read_reg(int fd, uint8_t reg) {
   uint8_t result = i2c_smbus_read_byte_data(fd, reg);
+
+  if (result < 0)
+    printf("i2c_read_reg() fail: %s\n", strerror(result));
+
   return result;
 }
 
 static uint8_t i2c_write_reg(int fd, uint8_t reg, uint8_t data) {
   uint8_t result = i2c_smbus_write_byte_data(fd, reg, data);
+
+  if (result < 0)
+    printf("i2c_write_reg() fail: %s\n", strerror(result));
+
   return result;
 }
 
 static uint8_t i2c_read(int fd) {
   uint8_t result = i2c_smbus_read_byte(fd);
+
+  if (result < 0)
+    printf("i2c_read() fail: %s\n", strerror(result));
+
   return result;
 }
 
 static uint8_t i2c_write(int fd, uint8_t data) {
   uint8_t result = i2c_smbus_write_byte(fd, data);
+
+  if (result < 0)
+    printf("i2c_write() fail: %s\n", strerror(result));
+
   return result;
 }
 
 static uint16_t i2c_read_word(int fd, uint8_t reg) {
   uint16_t result = i2c_smbus_read_word_data(fd, reg);
+
+  if (result < 0)
+    printf("i2c_read_word() fail: %s\n", strerror(result));
+
   return result;
 }
 
@@ -86,14 +106,16 @@ uint8_t mcp9600_read_temp(mcp9600_handle_t *handle,
 }
 
 uint8_t mcp9600_read_hot(mcp9600_handle_t *handle, uint16_t *data) {
-  *data = i2c_read_word(handle->fd, 0x00);
+  *data = i2c_read_word(handle->fd, MCP9600_REG_TH);
   return 0;
 }
 
 uint8_t mcp9600_read_cold(mcp9600_handle_t *handle, uint16_t *data) {
+  *data = i2c_read_word(handle->fd, MCP9600_REG_TC);
   return 0;
 }
 uint8_t mcp9600_read_delta(mcp9600_handle_t *handle, uint16_t *data) {
+  *data = i2c_read_word(handle->fd, MCP9600_REG_TD);
   return 0;
 }
 
@@ -112,23 +134,24 @@ uint8_t mcp9600_get_status_th_update(mcp9600_handle_t *handle, uint8_t *data) {
   return 0;
 }
 
-uint8_t mcp9600_get_status_sc(mcp9600_handle_t *handle, uint8_t *data){
+uint8_t mcp9600_get_status_sc(mcp9600_handle_t *handle, uint8_t *data) {
   uint8_t reg = i2c_read_reg(handle->fd, MCP9600_REG_STATUS);
 
   *data = reg & MCP9600_STATUS_REG_BIT_SC;
   return 0;
 }
 
-uint8_t mcp9600_get_status_input_range(mcp9600_handle_t *handle, uint8_t *data){
+uint8_t mcp9600_get_status_input_range(mcp9600_handle_t *handle,
+                                       uint8_t *data) {
   uint8_t reg = i2c_read_reg(handle->fd, MCP9600_REG_STATUS);
 
   *data = reg & MCP9600_STATUS_REG_BIT_INPUTRANGE;
   return 0;
 }
 uint8_t mcp9600_get_status_alert_status(mcp9600_handle_t *handle,
-                                        uint8_t *data){
-    uint8_t reg = i2c_read_reg(handle->fd, MCP9600_REG_STATUS);
+                                        uint8_t *data) {
+  uint8_t reg = i2c_read_reg(handle->fd, MCP9600_REG_STATUS);
 
-    *data = reg & MCP9600_STATUS_REG_BIT_ALERT1_4_STATUS;
-    return 0;
+  *data = reg & MCP9600_STATUS_REG_BIT_ALERT1_4_STATUS;
+  return 0;
 }
