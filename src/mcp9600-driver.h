@@ -106,6 +106,8 @@ uint8_t mcp9600_get_status_sc(mcp9600_handle_t *handle, uint8_t *data);
 uint8_t mcp9600_get_status_input_range(mcp9600_handle_t *handle, uint8_t *data);
 uint8_t mcp9600_get_status_alert_status(mcp9600_handle_t *handle, uint8_t *data);
 
+uint8_t mcp9600_set_thermocouple_type(mcp9600_handle_t *handle, mcp9600_thermocouple_t type);
+
 #ifdef __cplusplus
 }
 #endif

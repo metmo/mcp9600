@@ -90,6 +90,8 @@ uint8_t mcp9600_init(mcp9600_handle_t *handle, char *device, uint8_t i2c_addr,
   handle->resolution = resolution;
   handle->tc_type = tc_type;
 
+  mcp9600_set_thermocouple_type(handle, tc_type);
+
   return 0;
 }
 
@@ -154,4 +156,13 @@ uint8_t mcp9600_get_status_alert_status(mcp9600_handle_t *handle,
 
   *data = reg & MCP9600_STATUS_REG_BIT_ALERT1_4_STATUS;
   return 0;
+}
+
+uint8_t mcp9600_set_thermocouple_type(mcp9600_handle_t *handle,
+                                      mcp9600_thermocouple_t type) {
+
+  uint8_t tc_type = (uint8_t)type << 3;
+  uint8_t res = i2c_write_reg(handle->fd, MCP9600_REG_TCONF, tc_type);
+
+  return res;
 }

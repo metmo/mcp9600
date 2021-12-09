@@ -7,7 +7,6 @@ int main(int argc, char **argv) {
   mcp9600_handle_t handle;
 
   int err = mcp9600_init(&handle, "/dev/i2c-22", 0x67, TYPE_K, RES_12);
-
   if (err != 0) {
     exit(EXIT_FAILURE);
   }
@@ -21,8 +20,8 @@ int main(int argc, char **argv) {
   printf("Temp: %x\n", temp);
   printf("Temp: %f\n", f_data);
 
-  err = mcp9600_deinit(&handle);
 
+  err = mcp9600_deinit(&handle);
   if (err != 0) {
     exit(EXIT_FAILURE);
   }
