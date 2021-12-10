@@ -129,6 +129,8 @@ uint8_t mcp9600_set_filter_coefficients(mcp9600_handle_t *handle,
 uint8_t mcp9600_get_filter_coefficients(mcp9600_handle_t *handle,
                                         mcp9600_filter_coefficients_t *filter);
 
+uint8_t mcp9600_get_device_id(mcp9600_handle_t *handle, uint8_t *id);
+
 #ifdef __cplusplus
 }
 #endif

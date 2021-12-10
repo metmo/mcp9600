@@ -214,3 +214,13 @@ uint8_t mcp9600_get_filter_coefficients(mcp9600_handle_t *handle,
 
   return res;
 }
+
+uint8_t mcp9600_get_device_id(mcp9600_handle_t *handle, uint8_t *id) {
+
+  uint8_t raw_data = 0;
+  uint8_t res = i2c_read_reg(handle->fd, MCP9600_REG_DEV_ID, &raw_data);
+
+  *id = raw_data;
+
+  return res;
+}
