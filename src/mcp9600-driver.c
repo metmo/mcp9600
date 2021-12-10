@@ -33,7 +33,7 @@ static uint8_t i2c_deinit(int fd) {
 }
 
 static uint8_t i2c_read_reg(int fd, uint8_t reg, uint8_t *data) {
-  int16_t result = i2c_smbus_read_byte_data(fd, reg);
+  int32_t result = i2c_smbus_read_byte_data(fd, reg);
 
   if (result < 0) {
     printf("i2c_read_reg() fail: %s\n", strerror(errno));
@@ -46,7 +46,7 @@ static uint8_t i2c_read_reg(int fd, uint8_t reg, uint8_t *data) {
 }
 
 static uint8_t i2c_write_reg(int fd, uint8_t reg, uint8_t data) {
-  int16_t result = i2c_smbus_write_byte_data(fd, reg, data);
+  int32_t result = i2c_smbus_write_byte_data(fd, reg, data);
 
   if (result < 0) {
     printf("i2c_write_reg() fail: %s\n", strerror(errno));
@@ -57,7 +57,7 @@ static uint8_t i2c_write_reg(int fd, uint8_t reg, uint8_t data) {
 }
 
 static int16_t i2c_read(int fd, uint8_t *data) {
-  int16_t result = i2c_smbus_read_byte(fd);
+  int32_t result = i2c_smbus_read_byte(fd);
 
   if (result < 0) {
     printf("i2c_read() fail: %s\n", strerror(errno));
@@ -70,7 +70,7 @@ static int16_t i2c_read(int fd, uint8_t *data) {
 }
 
 static uint8_t i2c_write(int fd, uint8_t data) {
-  int16_t result = i2c_smbus_write_byte(fd, data);
+  int32_t result = i2c_smbus_write_byte(fd, data);
 
   if (result < 0) {
     printf("i2c_write() fail: %s\n", strerror(errno));
@@ -81,7 +81,7 @@ static uint8_t i2c_write(int fd, uint8_t data) {
 }
 
 static uint8_t i2c_read_word(int fd, uint8_t reg, uint16_t *data) {
-  int16_t result = i2c_smbus_read_word_data(fd, reg);
+  int32_t result = i2c_smbus_read_word_data(fd, reg);
 
   if (result < 0) {
     printf("i2c_read_word() fail: %s\n", strerror(errno));
