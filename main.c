@@ -11,10 +11,10 @@ int main(int argc, char **argv) {
     exit(EXIT_FAILURE);
   }
 
-  uint16_t temp;
+  uint16_t temp = 0;
   mcp9600_read_hot(&handle, &temp);
 
-  float f_data;
+  float f_data = 0.0f;
   mcp9600_read_temp(&handle, HOT, &f_data);
 
   printf("Temp: %x\n", temp);

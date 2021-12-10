@@ -6,7 +6,7 @@ DEBUG_DIR = debug
 SOURCES = main.c src/mcp9600-driver.c
 
 CC = gcc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -O2
 LIBS = -li2c
 INCLUDE_DIR = 
 

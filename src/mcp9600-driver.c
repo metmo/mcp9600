@@ -119,7 +119,7 @@ uint8_t mcp9600_deinit(mcp9600_handle_t *handle) {
 
 uint8_t mcp9600_read_temp(mcp9600_handle_t *handle,
                           mcp9600_thermocouple_reg_t reg, float *data) {
-  uint16_t raw_temp;
+  uint16_t raw_temp = 0;
   uint8_t res = i2c_read_word(handle->fd, reg, &raw_temp);
 
   *data = ((raw_temp & 0xff) * 16.0f) + ((raw_temp >> 8) / 16.0f);
@@ -143,7 +143,7 @@ uint8_t mcp9600_read_delta(mcp9600_handle_t *handle, uint16_t *data) {
 uint8_t mcp9600_get_status_burst_complete(mcp9600_handle_t *handle,
                                           uint8_t *data) {
 
-  uint8_t raw_data;
+  uint8_t raw_data = 0;
 
   uint8_t res = i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
@@ -153,7 +153,7 @@ uint8_t mcp9600_get_status_burst_complete(mcp9600_handle_t *handle,
 
 uint8_t mcp9600_get_status_th_update(mcp9600_handle_t *handle, uint8_t *data) {
 
-  uint8_t raw_data;
+  uint8_t raw_data = 0;
   uint8_t res = i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
   *data = raw_data & MCP9600_STATUS_REG_BIT_THUPDATE;
@@ -161,7 +161,7 @@ uint8_t mcp9600_get_status_th_update(mcp9600_handle_t *handle, uint8_t *data) {
 }
 
 uint8_t mcp9600_get_status_sc(mcp9600_handle_t *handle, uint8_t *data) {
-  uint8_t raw_data;
+  uint8_t raw_data = 0;
   uint8_t res = i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
   *data = raw_data & MCP9600_STATUS_REG_BIT_SC;
@@ -171,7 +171,7 @@ uint8_t mcp9600_get_status_sc(mcp9600_handle_t *handle, uint8_t *data) {
 uint8_t mcp9600_get_status_input_range(mcp9600_handle_t *handle,
                                        uint8_t *data) {
 
-  uint8_t raw_data;
+  uint8_t raw_data = 0;
   uint8_t res = i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
   *data = raw_data & MCP9600_STATUS_REG_BIT_INPUTRANGE;
@@ -180,7 +180,7 @@ uint8_t mcp9600_get_status_input_range(mcp9600_handle_t *handle,
 
 uint8_t mcp9600_get_status_alert_status(mcp9600_handle_t *handle,
                                         uint8_t *data) {
-  uint8_t raw_data;
+  uint8_t raw_data = 0;
   uint8_t res = i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
   *data = res & MCP9600_STATUS_REG_BIT_ALERT1_4_STATUS;
@@ -207,7 +207,7 @@ uint8_t mcp9600_set_filter_coefficients(mcp9600_handle_t *handle,
 
 uint8_t mcp9600_get_filter_coefficients(mcp9600_handle_t *handle,
                                         mcp9600_filter_coefficients_t *filter) {
-  uint8_t raw_data;
+  uint8_t raw_data = 0;
   uint8_t res = i2c_read_reg(handle->fd, MCP9600_REG_TCONF, &raw_data);
 
   *filter = raw_data & 0x07;
