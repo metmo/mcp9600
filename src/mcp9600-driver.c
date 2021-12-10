@@ -1,5 +1,5 @@
 #include "mcp9600-driver.h"
-#include "linux/i2c-dev.h"
+#include <linux/i2c-dev.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
