@@ -1,10 +1,12 @@
 #include "mcp9600-driver.h"
-#include <linux/i2c-dev.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <i2c/smbus.h>
+#include <linux/i2c-dev.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 
 static uint8_t i2c_init(char *name, int *fd, uint8_t i2c_addr) {
