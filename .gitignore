@@ -3,4 +3,4 @@ build/
 debug/
 .cache/
 .gdb_history
-
+.idea/
