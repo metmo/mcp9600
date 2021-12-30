@@ -15,7 +15,7 @@
 #define MCP9600_TCONF_REG_BIT_FILTER (3 << 0)
 
 #define MCP9600_CONFIG_REG_BIT_CJ_RES (1 << 7)
-#define MCP9600_CONFIG_REG_BIT_ADC_RES (2 << 5)
+#define MCP9600_CONFIG_REG_BIT_ADC_RES (3 << 5)
 #define MCP9600_CONFIG_REG_BIT_BURST_SAMPLES (3 << 2)
 #define MCP9600_CONFIG_REG_BIT_SHUTDOWN_MODES (2 << 0);
 
@@ -63,7 +63,7 @@ uint8_t mcp9600_get_status_burst_complete(mcp9600_handle_t *handle, uint8_t *dat
 
 	uint8_t res = handle->i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
-	*data = raw_data & MCP9600_STATUS_REG_BIT_BURSTCLPT;
+	*data = (raw_data & MCP9600_STATUS_REG_BIT_BURSTCLPT) >> 7;
 	return res;
 }
 
@@ -72,7 +72,7 @@ uint8_t mcp9600_get_status_th_update(mcp9600_handle_t *handle, uint8_t *data)
 	uint8_t raw_data = 0;
 	uint8_t res = handle->i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
-	*data = raw_data & MCP9600_STATUS_REG_BIT_THUPDATE;
+	*data = (raw_data & MCP9600_STATUS_REG_BIT_THUPDATE) >> 6;
 	return res;
 }
 
@@ -81,7 +81,7 @@ uint8_t mcp9600_get_status_sc(mcp9600_handle_t *handle, uint8_t *data)
 	uint8_t raw_data = 0;
 	uint8_t res = handle->i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
-	*data = raw_data & MCP9600_STATUS_REG_BIT_SC;
+	*data = (raw_data & MCP9600_STATUS_REG_BIT_SC) >> 5;
 	return res;
 }
 
@@ -90,7 +90,7 @@ uint8_t mcp9600_get_status_input_range(mcp9600_handle_t *handle, uint8_t *data)
 	uint8_t raw_data = 0;
 	uint8_t res = handle->i2c_read_reg(handle->fd, MCP9600_REG_STATUS, &raw_data);
 
-	*data = raw_data & MCP9600_STATUS_REG_BIT_INPUTRANGE;
+	*data = (raw_data & MCP9600_STATUS_REG_BIT_INPUTRANGE) >> 4;
 	return res;
 }
 
@@ -141,9 +141,18 @@ uint8_t mcp9600_set_resolution(mcp9600_handle_t *handle, mcp9600_resolution_t re
 	uint8_t reg;
 	handle->i2c_read_reg(handle->fd, MCP9600_REG_DCONF, &reg);
 
-	reg |= ((resolution & 0x03) << 5);
+	reg = (reg & ~MCP9600_CONFIG_REG_BIT_ADC_RES) | (resolution << 5);
 
-	int res = handle->i2c_write_reg(handle->fd, MCP9600_REG_TCONF, reg);
+	int res = handle->i2c_write_reg(handle->fd, MCP9600_REG_DCONF, reg);
+
+	return res;
+}
+
+uint8_t mcp9600_get_resolution(mcp9600_handle_t *handle, mcp9600_resolution_t *resolution)
+{
+	uint8_t reg;
+	int res = handle->i2c_read_reg(handle->fd, MCP9600_REG_DCONF, &reg);
+	*resolution = (reg & MCP9600_CONFIG_REG_BIT_ADC_RES) >> 5;
 
 	return res;
 }
