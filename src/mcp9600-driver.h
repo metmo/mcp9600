@@ -64,18 +64,17 @@ typedef enum mcp9600_filter_coefficients {
 } mcp9600_filter_coefficients_t;
 
 typedef struct mcp9600_handle {
-	int fd;
 	uint8_t i2c_addr;
 	char *adapter;
 	mcp9600_thermocouple_t tc_type;
 	mcp9600_resolution_t resolution;
 	mcp9600_filter_coefficients_t filter;
 
-	uint8_t (*i2c_init)(char *name, int *fd, uint8_t i2c_addr);
-	uint8_t (*i2c_deinit)(int fd);
-	uint8_t (*i2c_write_reg)(int fd, uint8_t reg, uint8_t data);
-	uint8_t (*i2c_read_reg)(int fd, uint8_t reg, uint8_t *data);
-	uint8_t (*i2c_read_word)(int fd, uint8_t reg, uint16_t *data);
+	uint8_t (*i2c_init)(char *name, uint8_t i2c_addr);
+	uint8_t (*i2c_deinit)();
+	uint8_t (*i2c_write_reg)(uint8_t reg, uint8_t data);
+	uint8_t (*i2c_read_reg)(uint8_t reg, uint8_t *data);
+	uint8_t (*i2c_read_word)(uint8_t reg, uint16_t *data);
 
 } mcp9600_handle_t;
 

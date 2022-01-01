@@ -48,19 +48,18 @@ int main(int argc, char **argv)
 	float f_data = 0.0f;
 	mcp9600_read_temp(&handle, MCP9600_REG_TH, &f_data);
 
-    printf("Set resolution: %d\n", RES_12);
-    mcp9600_set_resolution(&handle, RES_12);
-    
-    mcp9600_resolution_t resolution;
-    mcp9600_get_resolution(&handle, &resolution);
-    printf("Get resolution: %d\n", resolution);
+	printf("Set resolution: %d\n", RES_12);
+	mcp9600_set_resolution(&handle, RES_12);
 
+	mcp9600_resolution_t resolution;
+	mcp9600_get_resolution(&handle, &resolution);
+	printf("Get resolution: %d\n", resolution);
 
-    printf("Set resolution: %d\n", RES_14);
-    mcp9600_set_resolution(&handle, RES_14);
-    
-    mcp9600_get_resolution(&handle, &resolution);
-    printf("Get resolution: %d\n", resolution);
+	printf("Set resolution: %d\n", RES_14);
+	mcp9600_set_resolution(&handle, RES_14);
+
+	mcp9600_get_resolution(&handle, &resolution);
+	printf("Get resolution: %d\n", resolution);
 
 	printf("DeviceId: 0x%x\n", id);
 	printf("Temp: %f\n", f_data);
