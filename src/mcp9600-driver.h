@@ -61,14 +61,14 @@ typedef enum mcp9600_filter_coefficients {
 	FILTER_5 = 0x05,
 	FILTER_6 = 0x06,
 	FILTER_7 = 0x07,
-} mcp9600_filter_coefficients_t;
+} mcp9600_filter_t;
 
 typedef struct mcp9600_handle {
 	uint8_t i2c_addr;
 	char *adapter;
 	mcp9600_thermocouple_t tc_type;
 	mcp9600_resolution_t resolution;
-	mcp9600_filter_coefficients_t filter;
+	mcp9600_filter_t filter;
 
 	uint8_t (*i2c_init)(char *name, uint8_t i2c_addr);
 	uint8_t (*i2c_deinit)();
@@ -90,13 +90,12 @@ uint8_t mcp9600_get_status_input_range(mcp9600_handle_t *handle, uint8_t *data);
 uint8_t mcp9600_get_status_alert_status(mcp9600_handle_t *handle, uint8_t *data);
 
 uint8_t mcp9600_set_thermocouple_type(mcp9600_handle_t *handle, mcp9600_thermocouple_t type);
-uint8_t mcp9600_set_filter_coefficients(mcp9600_handle_t *handle,
-					mcp9600_filter_coefficients_t filter);
+
 uint8_t mcp9600_set_resolution(mcp9600_handle_t *handle, mcp9600_resolution_t resolution);
 uint8_t mcp9600_get_resolution(mcp9600_handle_t *handle, mcp9600_resolution_t *resolution);
 
-uint8_t mcp9600_get_filter_coefficients(mcp9600_handle_t *handle,
-					mcp9600_filter_coefficients_t *filter);
+uint8_t mcp9600_set_filter_coefficients(mcp9600_handle_t *handle, mcp9600_filter_t filter);
+uint8_t mcp9600_get_filter_coefficients(mcp9600_handle_t *handle, mcp9600_filter_t *filter);
 
 uint8_t mcp9600_get_device_id(mcp9600_handle_t *handle, uint8_t *id);
 
