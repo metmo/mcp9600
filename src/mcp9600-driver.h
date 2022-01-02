@@ -32,7 +32,7 @@ typedef enum mcp9600_registers {
 	MCP9600_REG_T_ALERT3 = 0x12,
 	MCP9600_REG_T_ALERT4 = 0x13,
 	MCP9600_REG_DEV_ID = 0x20
-} mcp9600_registers_t;
+} mcp9600_register_t;
 
 typedef enum mcp9600_thermocouple {
 	TYPE_K = 0x00,
@@ -63,6 +63,11 @@ typedef enum mcp9600_filter_coefficients {
 	FILTER_7 = 0x07,
 } mcp9600_filter_t;
 
+typedef struct mcp9600_sensor_config {
+	mcp9600_filter_t filter;
+	mcp9600_thermocouple_t tc;
+} mcp9600_sensor_config_t;
+
 typedef struct mcp9600_handle {
 	uint8_t i2c_addr;
 	char *adapter;
@@ -81,7 +86,7 @@ typedef struct mcp9600_handle {
 uint8_t mcp9600_init(mcp9600_handle_t *handle);
 uint8_t mcp9600_deinit(mcp9600_handle_t *handle);
 
-uint8_t mcp9600_read_temp(mcp9600_handle_t *handle, mcp9600_registers_t reg, float *data);
+uint8_t mcp9600_read_temp(mcp9600_handle_t *handle, mcp9600_register_t reg, float *data);
 
 uint8_t mcp9600_get_status_burst_complete(mcp9600_handle_t *handle, uint8_t *data);
 uint8_t mcp9600_get_status_th_update(mcp9600_handle_t *handle, uint8_t *data);

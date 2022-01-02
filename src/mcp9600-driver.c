@@ -45,7 +45,7 @@ uint8_t mcp9600_deinit(mcp9600_handle_t *handle)
 	return handle->i2c_deinit();
 }
 
-uint8_t mcp9600_read_temp(mcp9600_handle_t *handle, mcp9600_registers_t reg, float *data)
+uint8_t mcp9600_read_temp(mcp9600_handle_t *handle, mcp9600_register_t reg, float *data)
 {
 	uint16_t raw_temp = 0;
 	uint8_t res = handle->i2c_read_word(reg, &raw_temp);
